@@ -1,5 +1,5 @@
 
-from ..entity import DataIngestionConfig, DataValidationConfig
+from ..entity import DataIngestionConfig, DataValidationConfig, DataTransformationConfig
 from ..constants import *
 from ..utils.common import read_yaml, create_directories
 
@@ -43,5 +43,19 @@ class ConfigurationManager:
             STATUS_FILE=config.STATUS_FILE,
             ALL_REQUIRED_FILLS=config.ALL_REQUIRED_FILLS
         )
+
+        return data_validation_config
+    
+    def get_data_transformation_config(self) -> DataTransformationConfig:
+        config = self.config.data_transformation
+
+        create_directories([config.root_dir])
+
+        data_validation_config = DataTransformationConfig(
+            root_dir = config.root_dir,
+            data_path = config.data_path,
+            tokenizer_name = config.tokenizer_name
+        )
+
 
         return data_validation_config
